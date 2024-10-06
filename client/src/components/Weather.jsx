@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import { IconContext } from 'react-icons';
 const Weather = () => {
     const [location, setLocation] = useState(null);
     const [weather, setWeather] = useState(null);
@@ -89,17 +88,11 @@ const Weather = () => {
 
     return (
         <div className="font-inter">
-            <div className="p-5 space-x-4 font-bold flex items-center justify-center">
-                <p className="text-4xl">How is the weather today? </p>
-                <div className="ml-8 cursor-pointer">
-                    <FaIcons.FaSync className="text-white" onClick={getWeatherInfo} />
-                </div>
-            </div>
-            <div className="p-5 space-y-5 font-bold items-center justify-center">
+            <div className="p-5 space-y-5 font-bold items-center justify-center text-xl">
                 <div>
                     {location ? (
-                        <div className="text-2xl">
-                            <div>Current Location: </div>
+                        <div className="space-y-3">
+                            <FaIcons.FaMapMarker />
                             <div>{location}</div>
                         </div>
                     ) : (
@@ -110,8 +103,8 @@ const Weather = () => {
                 </div>
                 <div>
                     {weather ? (
-                        <div className="text-2xl">
-                            <div >Current Weather: </div>
+                        <div className="">
+                            <FaIcons.FaCloudSun />
                             <div>{weather}</div>
                             <div>{temperature}</div>
                             <div>{windSpeed}</div>
