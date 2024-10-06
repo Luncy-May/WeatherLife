@@ -110,7 +110,7 @@ const Weather = () => {
                             <div>{weather}</div>
                             <div>{temperature}</div>
                             <div>{windSpeed}</div>
-                            <div className="text-4xl text-center animate-pulse duration-500">{weatherCondition} </div>
+                            <div className="text-4xl text-center animate-pulse duration-500 pt-5">{weatherCondition} </div>
                         </div>
                     ) : (
                         <div className="text-red-500 text-xl pt-5">
