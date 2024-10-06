@@ -57,7 +57,7 @@ const Plan = ({ WeatherInformation }) => { // plan information container
                         </div>
                     </div>
                     <div >
-                        recovery: {recovery}
+                        Recovery: {recovery}
                         <div>
                             <Drag value={recovery} handleSlide={recoverySlide} />
                         </div>
