@@ -26,34 +26,7 @@ const Weather = () => {
         }
     }
 
-    //     Weather Data
-    // {
-    //   latitude: 38.655964,
-    //   longitude: -90.31349,
-    //   generationtime_ms: 0.07390975952148438,
-    //   utc_offset_seconds: 0,
-    //   timezone: 'GMT',
-    //   timezone_abbreviation: 'GMT',
-    //   elevation: 168,
-    //   current_weather_units: {
-    //     time: 'iso8601',
-    //     interval: 'seconds',
-    //     temperature: '°C',
-    //     windspeed: 'km/h',
-    //     winddirection: '°',
-    //     is_day: '',
-    //     weathercode: 'wmo code'
-    //   },
-    //   current_weather: {
-    //     time: '2024-10-06T00:45',
-    //     interval: 900,
-    //     temperature: 24.1,
-    //     windspeed: 9.4,
-    //     winddirection: 182,
-    //     is_day: 0,
-    //     weathercode: 0
-    //   }
-    // }
+
     async function getWeatherInfo(latitude, longitude) {
         try {
             const response = await fetch(`http://localhost:5002/api/weather?latitude=${latitude}&longitude=${longitude}`);
@@ -115,7 +88,7 @@ const Weather = () => {
     }
 
     return (
-        <div>
+        <div className="font-inter">
             <div className="p-5 space-x-4 font-bold flex items-center justify-center">
                 <p className="text-4xl">How is the weather today? </p>
                 <div className="ml-8 cursor-pointer">
