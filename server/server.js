@@ -69,7 +69,7 @@ const exercises = {
     "badminton": { "intensity": 60, "groupwork": 30, "recovery": 30, "endurance": 40 , "weatherCoefficient": 1},
     "table tennis": { "intensity": 70, "groupwork": 35, "recovery": 35, "endurance": 50 , "weatherCoefficient": 1},
     "racquetball": { "intensity": 80, "groupwork": 35, "recovery": 40, "endurance": 60 , "weatherCoefficient": 1},
-    "squash": { "intensity": 85, "groupwork": 35, "recovery": 40, "endurance": 65 }
+    "squash": { "intensity": 85, "groupwork": 35, "recovery": 40, "endurance": 65 , "weatherCoefficient": 1}
 }
 
 // Endpoint to fetch location info based on lat/lng

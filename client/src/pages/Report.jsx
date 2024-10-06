@@ -1,5 +1,5 @@
 import React from 'react'
-import { Map, Plan, Weather } from '../components'
+import { Plan, Weather } from '../components'
 const Report = () => {
   return (
     <div className='pt-5 space-y-5 flex flex-col items-center justify-center'>
