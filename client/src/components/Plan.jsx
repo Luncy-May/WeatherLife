@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Drag from './Drag'
-
+import List from './List'
 const Plan = ({ WeatherInformation }) => { // plan information container
+    const [list, setList] = useState([])
     const [intensity, setIntensity] = useState(0)
     const intensitySlide = (newValue) => {
         setIntensity(newValue)
@@ -20,27 +21,29 @@ const Plan = ({ WeatherInformation }) => { // plan information container
     const enduranceSlide = (newValue) => {
         setEndurance(newValue)
     }
-    async function generateResult() {
+    const getList = async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5002/api/getPlan?latitude=${latitude}&longitude=${longitude}`);
+            const response = await fetch(`http://localhost:5002/api/getList?intensity=${intensity}&groupwork=${groupwork}&recovery=${recovery}&endurance=${endurance}`);
             const data = await response.json();
-
+            console.log('list')
+            console.log(data)
             if (response.ok) {
-                setLocation(data.location);
+                setList(data.suggestedExercises)
             } else {
-                seterrorLocationMessage(data.error || "Failed to get location info.");
+                seterrorWeatherMessage("Failed to get list info.");
             }
         } catch (error) {
-            seterrorLocationMessage("An error occurred while fetching location data.");
+            seterrorWeatherMessage("An error occurred while fetching list data.");
         }
     }
     return (
         <div className="p-5 space-y-5 font-bold items-center justify-center text-xl">
             <div>
-            <p className='text-center'>Personalized Plans</p>
+                <p className='text-center'>Personalized Plans</p>
             </div>
             <div className='flex space-x-[2vw] '>
-                <div className='min-w-[400px] border border-white p-5'>
+                <div className='min-w-[400px] border border-white shadow-md hover:shadow-2xl p-5'>
                     <div>
                         Intensity: {intensity}
                         <div>
@@ -68,16 +71,16 @@ const Plan = ({ WeatherInformation }) => { // plan information container
                 </div>
                 <div className='flex flex-col justify-center'>
                     <div className='p-2 border border-white shadow-md hover:shadow-lg text-center mb-2'>
-                    <button onClick={() => generateResult}>See Suggestions </button>
+                        <form onSubmit={getList}>
+                            <button type="submit">See Suggestions </button>
+                        </form>
                     </div>
                     <div>
-                        <input type = "checkbox" onChange = {() => handleCheck}></input> 
+                        <input type="checkbox" onChange={() => handleCheck}></input>
                         <span className='text-[20px] ml-1'>Auto-Suggestion On</span>
                     </div>
                 </div>
-                <div className='border border-white shadow-md hover:shadow-lg p-5 min-w-[400px]'>
-                    <p> Recommended Activities</p>
-                </div>
+                <List list={list} />
             </div>
         </div>
     )
