@@ -115,6 +115,9 @@ app.get('/api/weather', async (req, res) => {
         const data = await response.json();
         console.log("Weather Data")
         console.log(data)
+        const currentWeather = data.current_weather;
+        const weatherCondition = getWeatherCondition(currentWeather);
+
         try {
             res.json({ location: data });
         } catch (error) {
@@ -149,6 +152,57 @@ app.get('/api/getPlan', async (req, res) => {
     }
 });
 
+function getWeatherCondition(currentWeather) {
+    const weatherCode = currentWeather.weathercode;
+    switch (weatherCode) {
+        case 0:
+            return 'Clear sky';
+        case 1:
+        case 2:
+        case 3:
+            return 'Mainly clear';
+        case 45:
+        case 48:
+            return 'Fog';
+        case 51:
+        case 53:
+        case 55:
+            return 'Drizzle';
+        case 56:
+        case 57:
+            return 'Freezing drizzle';
+        case 61:
+        case 63:
+        case 65:
+            return 'Rain';
+        case 66:
+        case 67:
+            return 'Freezing rain';
+        case 71:
+        case 73:
+        case 75:
+            return 'Snow';
+        case 77:
+            return 'Snow grains';
+        case 80:
+        case 81:
+        case 82:
+            return 'Rain showers';
+        case 83:
+        case 84:
+        case 85:
+        case 86:
+            return 'Thunderstorm';
+        case 95:
+            return 'Thunderstorm with heavy rain';
+        case 96:
+            return 'Thunderstorm with hail';
+        case 99:
+            return 'Thunderstorm with heavy hail';
+        default:
+            return 'Unknown';
+    }
+}
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
