@@ -15,7 +15,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-exercises = {
+const exercises = {
     "basketball": { "intensity": 80, "groupwork": 90, "recovery": 60, "endurance": 80 },
     "soccer": { "intensity": 85, "groupwork": 95, "recovery": 65, "endurance": 85 },
     "tennis": { "intensity": 70, "groupwork": 50, "recovery": 55, "endurance": 70 },
@@ -119,7 +119,7 @@ app.get('/api/weather', async (req, res) => {
         const weatherCondition = getWeatherCondition(currentWeather);
 
         try {
-            res.json({ location: data });
+            res.json({ weather: data, condition: weatherCondition});
         } catch (error) {
             res.status(500).json({ error: 'Failed to get weather info' });
         }
@@ -136,19 +136,21 @@ app.get('/api/getPlan', async (req, res) => {
         return res.status(400).json({ error: 'information is incompleted' });
     }
 
+    const sseExercises = Object.keys(exercises).map(exercise => {
+        const exerciseData = exercises[exercise];
+        const sse = Math.pow(exerciseData.intensity - intensity, 2) +
+                    Math.pow(exerciseData.groupwork - groupwork, 2) +
+                    Math.pow(exerciseData.recovery - recovery, 2) +
+                    Math.pow(exerciseData.endurance - endurance, 2);
+        return { exercise, sse };
+    });
 
+    sseExercises.sort((a, b) => a.sse - b.sse);
+    const suggestedExercises = sseExercises.slice(0, 5).map(exercise => exercise.exercise);
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log("Weather Data")
-        console.log(data)
-        try {
-            res.json({ location: data });
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to generate a suggested plan info' });
-        }
+        res.json({ suggestedExercises });
     } catch (error) {
-        res.status(500).json({ error: 'An error occurred while fetching plan data' });
+        res.status(500).json({ error: 'Failed to generate a suggested plan info' });
     }
 });
 

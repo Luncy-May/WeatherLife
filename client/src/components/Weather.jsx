@@ -5,6 +5,7 @@ const Weather = () => {
     const [weather, setWeather] = useState(null);
     const [temperature, setTemperature] = useState(null)
     const [windSpeed, setWindSpeed] = useState(null)
+    const [weatherCondition, setWeatherCondition]= useState(null)
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [errorLocationMessage, seterrorLocationMessage] = useState(null);
     const [errorWeatherMessage, seterrorWeatherMessage] = useState(null);
@@ -33,9 +34,10 @@ const Weather = () => {
             console.log('weather')
             console.log(data)
             if (response.ok) {
-                setWeather("timezone: " + data.location.timezone + " , current time: " + data.location.current_weather.time);
-                setTemperature("temperature: " + data.location.current_weather.temperature + " (" + data.location.current_weather_units.temperature + ")");
-                setWindSpeed("wind speed: " + data.location.current_weather.windspeed + " (" + data.location.current_weather_units.windspeed + ")");
+                setWeather("timezone: " + data.weather.timezone + " , current time: " + data.weather.current_weather.time);
+                setTemperature("temperature: " + data.weather.current_weather.temperature + " (" + data.weather.current_weather_units.temperature + ")");
+                setWindSpeed("wind speed: " + data.weather.current_weather.windspeed + " (" + data.weather.current_weather_units.windspeed + ")");
+                setWeatherCondition(data.condition)
             } else {
                 seterrorWeatherMessage("Failed to get Weather info.");
             }
@@ -103,11 +105,12 @@ const Weather = () => {
                 </div>
                 <div>
                     {weather ? (
-                        <div className="">
+                        <div>
                             <FaIcons.FaCloudSun />
                             <div>{weather}</div>
                             <div>{temperature}</div>
                             <div>{windSpeed}</div>
+                            <div className="text-4xl text-center animate-pulse duration-500">{weatherCondition} </div>
                         </div>
                     ) : (
                         <div className="text-red-500 text-xl pt-5">
